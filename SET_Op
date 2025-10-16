@@ -1,0 +1,84 @@
+-- Step 1: Create a database
+CREATE DATABASE company_set_db;
+
+-- Step 2: Use the database
+USE company_set_db;
+
+-- Step 3: Create first table
+CREATE TABLE ProjectA (
+    emp_id INT,
+    emp_name VARCHAR(50)
+);
+
+-- Step 4: Create second table
+CREATE TABLE ProjectB (
+    emp_id INT,
+    emp_name VARCHAR(50)
+);
+
+-- Step 5: Insert sample data into ProjectA
+INSERT INTO ProjectA (emp_id, emp_name) VALUES
+(1, 'Anita'),
+(2, 'Rahul'),
+(3, 'Sneha'),
+(4, 'Arjun');
+
+-- Step 6: Insert sample data into ProjectB
+INSERT INTO ProjectB (emp_id, emp_name) VALUES
+(3, 'Sneha'),
+(4, 'Arjun'),
+(5, 'Meera'),
+(6, 'Vikram');
+
+-- Step 7: View both tables
+SELECT * FROM ProjectA;
+SELECT * FROM ProjectB;
+
+------------------------------------------------------------
+-- Step 8: UNION Operation (All unique employees)
+-- Combines results of both tables, removes duplicates
+------------------------------------------------------------
+SELECT emp_id, emp_name FROM ProjectA
+UNION
+SELECT emp_id, emp_name FROM ProjectB;
+
+------------------------------------------------------------
+-- Step 9: UNION ALL (Includes duplicates)
+------------------------------------------------------------
+SELECT emp_id, emp_name FROM ProjectA
+UNION ALL
+SELECT emp_id, emp_name FROM ProjectB;
+
+------------------------------------------------------------
+-- Step 10: INTERSECT Operation (Common employees)
+-- NOTE: MySQL does NOT support INTERSECT directly.
+-- For MySQL, simulate using INNER JOIN or EXISTS
+------------------------------------------------------------
+
+-- For PostgreSQL / Oracle:
+-- SELECT emp_id, emp_name FROM ProjectA
+-- INTERSECT
+-- SELECT emp_id, emp_name FROM ProjectB;
+
+-- For MySQL (using INNER JOIN to simulate INTERSECT):
+SELECT a.emp_id, a.emp_name
+FROM ProjectA a
+INNER JOIN ProjectB b ON a.emp_id = b.emp_id;
+
+------------------------------------------------------------
+-- Step 11: SET DIFFERENCE (Employees in A but not in B)
+-- In SQL standard, use EXCEPT (PostgreSQL)
+-- In Oracle, use MINUS
+-- In MySQL, simulate using LEFT JOIN + WHERE NULL
+------------------------------------------------------------
+
+-- PostgreSQL / SQL Server version:
+-- SELECT emp_id, emp_name FROM ProjectA
+-- EXCEPT
+-- SELECT emp_id, emp_name FROM ProjectB;
+
+-- MySQL version:
+SELECT a.emp_id, a.emp_name
+FROM ProjectA a
+LEFT JOIN ProjectB b ON a.emp_id = b.emp_id
+WHERE b.emp_id IS NULL;
