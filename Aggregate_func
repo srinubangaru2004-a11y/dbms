@@ -1,0 +1,57 @@
+-- Step 1: Create a database
+CREATE DATABASE company_db;
+
+-- Step 2: Use the database
+USE company_db;
+
+-- Step 3: Create a table
+CREATE TABLE employees (
+    emp_id INT PRIMARY KEY,
+    name VARCHAR(50),
+    department VARCHAR(50),
+    salary FLOAT
+);
+
+-- Step 4: Insert some sample data
+INSERT INTO employees (emp_id, name, department, salary) VALUES
+(1, 'Anita', 'HR', 45000),
+(2, 'Rahul', 'IT', 60000),
+(3, 'Sneha', 'Finance', 55000),
+(4, 'Arjun', 'IT', 65000),
+(5, 'Meera', 'HR', 47000),
+(6, 'Vikram', 'Finance', 52000),
+(7, 'Neha', 'IT', 72000);
+
+-- Step 5: View all data
+SELECT * FROM employees;
+
+-- Step 6: Use Aggregate Functions
+SELECT 
+    SUM(salary) AS Total_Salary,
+    AVG(salary) AS Average_Salary,
+    MIN(salary) AS Minimum_Salary,
+    MAX(salary) AS Maximum_Salary,
+    COUNT(*) AS Total_Employees
+FROM employees;
+
+-- Step 7: Group data by department and apply aggregate functions
+SELECT 
+    department,
+    SUM(salary) AS Total_Salary,
+    AVG(salary) AS Average_Salary,
+    MIN(salary) AS Minimum_Salary,
+    MAX(salary) AS Maximum_Salary,
+    COUNT(*) AS Employee_Count
+FROM employees
+GROUP BY department;
+
+-- Step 8: Use HAVING clause to filter grouped results
+-- Show only departments with total salary greater than 1,00,000
+SELECT 
+    department,
+    SUM(salary) AS Total_Salary,
+    AVG(salary) AS Average_Salary,
+    COUNT(*) AS Employee_Count
+FROM employees
+GROUP BY department
+HAVING SUM(salary) > 100000;
